@@ -21,12 +21,12 @@ const Header = () => {
         <div className="w-full bg-[#E7F66C]">
 
       
-            <div className="flex flex-col md:flex-row items-center md:justify-between px-4 md:px-6 py-3 gap-3">
+            <div className="flex  flex-col md:flex-row items-center md:justify-between px-4 md:px-6 py-3 gap-3">
 
                 <img src="LOGO.png" alt="logo" className="w-40 px-3" />
 
                 
-                <div className="flex flex-col md:flex-row items-center gap-3 md:gap-4 w-full md:w-auto">
+                <div className="flex  md:flex-row items-center gap-3 md:gap-4 w-full md:w-auto">
 
                     
                     <div className="flex w-40 sm:w-52 md:w-60 border border-gray-900 bg-white rounded-md px-2 py-2">
@@ -50,7 +50,7 @@ const Header = () => {
             </div>
 
      
-            <div className="hidden md:flex gap-7 px-7 py-1 justify-center font-medium">
+            <div className="flex  overflow-x-auto md:flex gap-7 px-7 py-1 justify-between font-medium">
                 {menuItems.map((item, index) => (
                     <p
                         key={index}

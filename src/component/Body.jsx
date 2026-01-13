@@ -11,7 +11,7 @@ const Body = () => {
       <div className="absolute inset-0 bg-black/10"></div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 pt-24 sm:pt-32 text-white">
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold leading-snug max-w-xl">
+        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold leading-snug max-w-xl solway-light">
           The World First Jewellery <br />
           E-Commerce Platform <br />
           The Future Talent
