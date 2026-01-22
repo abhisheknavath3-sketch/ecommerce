@@ -1,114 +1,18 @@
-import React from "react";
-
-
-import b1 from "../assets/b1.png";
-import b2 from "../assets/b2.png";
-import b3 from "../assets/b3.png";
-import b4 from "../assets/b4.png";
-
-import p1 from "../assets/p1.png";
-import p2 from "../assets/p2.png";
-import p3 from "../assets/p3.png";
-import p4 from "../assets/p4.png";
-
-
+import React, { useContext } from "react";
+import { topDemandedItems, banners, budgetData, products, } from "../constant/Index";
 import gold from "../assets/gold.png";
+import { ContentContext } from "../context/ContentContext";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
-const topDemandedItems = [
-    {
-        id: 1,
-        name: "Emerald earrings",
-        sku: "18040",
-        price: 20000,
-        oldPrice: 22000,
-        img: "item1.png",
-    },
-    {
-        id: 2,
-        name: "Emerald earrings",
-        sku: "18040",
-        price: 20000,
-        oldPrice: 22000,
-        img: "item2.png",
-    },
-    {
-        id: 3,
-        name: "Silver bracelet",
-        sku: "18039",
-        price: 8000,
-        oldPrice: 9500,
-        img: "item3.png",
-    },
-    {
-        id: 4,
-        name: "Emerald earrings",
-        sku: "18040",
-        price: 20000,
-        oldPrice: 22000,
-        img: "item4.png",
-    },
-    {
-        id: 5,
-        name: "Emerald earrings",
-        sku: "18040",
-        price: 20000,
-        oldPrice: 22000,
-        img: "item5.png",
-    },
-    {
-        id: 6,
-        name: "Emerald earrings",
-        sku: "18040",
-        price: 20000,
-        oldPrice: 22000,
-        img: "item6.png",
-    },
-    {
-        id: 7,
-        name: "Silver bracelet",
-        sku: "18039",
-        price: 8000,
-        oldPrice: 9500,
-        img: "item7.png",
-    },
-    {
-        id: 8,
-        name: "Emerald earrings",
-        sku: "18040",
-        price: 20000,
-        oldPrice: 22000,
-        img: "item8.png",
-    },
-];
-
-const banners = [
-    {
-        id: 1,
-        img: "/man.png", // public folder path
-        alt: "Bluestone Man Banner",
-    },
-];
-
-
-const budgetData = [
-    { id: 1, img: b1 },
-    { id: 2, img: b2 },
-    { id: 3, img: b3 },
-    { id: 4, img: b4 },
-];
-
-const products = [
-    { id: 1, name: "Diamond ring", price: "27000", img: p1 },
-    { id: 2, name: "Diamond ring", price: "27000", img: p2 },
-    { id: 3, name: "Diamond ring", price: "27000", img: p3 },
-    { id: 4, name: "Diamond ring", price: "27000", img: p4 },
-];
 
 
 const Main = () => {
+    const navigate = useNavigate();
+    const { wishlist, addToWishlist, addToCart, } = useContext(ContentContext);
+    
     return (
-        <div className="bg-[#1b1b1b] text-white px-4 sm:px-6 lg:px-10 py-8">
-
+        <div className="bg-[#1b1b1b]  text-white px-4 sm:px-6 lg:px-10 py-8">
 
             <div className="text-center mb-10">
                 <h2 className="text-3xl font-semibold font-bodoni text-[#DBF227]">
@@ -119,16 +23,17 @@ const Main = () => {
                 </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
                 {budgetData.map((item) => (
-                    <div key={item.id} className="relative rounded-xl overflow-hidden bg-black">
+                    <div key={item.id} className="relative rounded-xl overflow-hidden bg-black 
+                     hover:shadow-lg hover:scale-105 transition-transform duration-300 cursor-pointer">
 
                         <img
                             src={item.img}
                             alt={item.label}
-                            className="w-full h-48 sm:h-56 lg:h-64 object-cover"
+                            className="w-full h-48 sm:h-56 lg:h-64 object-cover "
                         />
-                        <div className="absolute bottom-4 left-4">
+                        <div className="absolute bottom-4 left-4 ">
                             <p className="text-sm text-gray-300">{item.label}</p>
                             <p className="text-yellow-400 text-xs">{item.price}</p>
                         </div>
@@ -146,65 +51,94 @@ const Main = () => {
                 </span>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-                {products.map((item) => (
-                    <div
-                        key={item.id}
-                        className="bg-[#0f0f0f] rounded-xl p-4"
-                    >
-                        <div className="flex justify-end mb-2">♡</div>
+            <div className="flex gap-6 overflow-x-auto pb-4 hide-scrollbar">
+                {products.map((item) => {
+                    const isWishlisted = wishlist.some((w) => w.id === item.id);
 
-                        <img
-                            src={item.img}
-                            alt={item.name}
-                            className="w-full h-40 object-contain mb-4"
-                        />
+                    return (
+                        <div
+                            key={item.id}
+                            className="min-w-62.5 shrink-0 bg-[#0f0f0f] rounded-xl p-4 flex flex-col "
+                        >
+                            {/* Product Image */}
+                            <img
+                                src={item.img}
+                                alt={item.name}
+                                onClick={() => navigate(`/product/${item.id}`)}
+                                className="w-full h-40 sm:h-48 md:h-52 lg:h-56 object-contain mb-4 
+                                hover:scale-110 transition cursor-pointer"
+                            />
 
-                        <h4 className="text-sm">{item.name}</h4>
-                        <p className="text-yellow-400">{item.price}</p>
+                            {/* Product Info */}
+                            <h4 className="text-sm sm:text-base md:text-lg text-white mb-1">
+                                {item.name}
+                            </h4>
+                            <p className="text-gray-400 text-xs sm:text-sm md:text-base mb-1">
+                                SKU: {item.sku}
+                            </p>
+                            <p className="text-[#DBF227] font-semibold text-sm sm:text-base md:text-lg mb-4">
+                                {item.price}
+                            </p>
 
-                        <button className="mt-3 w-full border border-[#DBF227] text-[#DBF227] rounded-md py-2 text-xs hover:bg-[#DBF227] hover:text-black transition cursor-pointer">
-                            ADD TO CART
-                        </button>
+                            {/* Buttons */}
+                            <div className="mt-auto flex items-center gap-2">
+                                <button
+                                    onClick={() => addToCart(item)}
+                                    className="flex-1 bg-[#DBF227] text-black font-semibold rounded-md py-2 sm:py-3  cursor-pointer"
+                                >
+                                    ADD TO CART
+                                </button>
 
-                    </div>
-
-                ))}
+                                <button
+                                    onClick={() => addToWishlist(item)}
+                                    className={`w-12 h-8 sm:w-13 sm:h-12 flex items-center justify-center 
+                                      border border-[#DBF227] rounded-md transition cursor-pointer
+                                             ${isWishlisted
+                                            ? "bg-[#DBF227] text-black"
+                                            : "text-white hover:bg-[#DBF227]"
+                                        }
+                                             `}
+                                >
+                                    {isWishlisted ? <FaHeart /> : <FaRegHeart />}
+                                </button>
+                            </div>
+                        </div>
+                    );
+                })}
 
             </div>
 
-            <div className="relative w-full min-h-[350px] mt-15 rounded-2xl overflow-hidden bg-gradient-to-r from-[#6b6f18] via-[#1a1a0a] to-black">
 
-                <img
+
+            <div className="relative w-full min-h-100 mt-19 rounded-2xl overflow-hidden bg-linear-to-r from-[#6b6f18] via-[#1a1a0a] to-black">
+
+                <img 
                     src={gold}
                     alt="Gold Jewellery"
-                    className="absolute left-1/2 lg:left-8 top-6 lg:top-1/2 
--translate-x-1/2 lg:translate-x-0 
-lg:-translate-y-1/2 
-w-[80%] sm:w-[60%] max-w-[500px]"
-                />
+                    className="absolute left-1/2 lg:left-0.5 top-6 lg:top-1/2 -translate-x-1/2 lg:translate-x-0 lg:-translate-y-1/2 
+                    w-[80%] sm:w-[60%] max-w-162.5"
+                  />
 
 
-                <div className="relative z-10 max-w-7xl mx-auto h-full flex justify-end px-4 sm:px-8 lg:px-25 pt-32 lg:pt-25">
+                 <div className="relative z-10 max-w-7xl mx-auto h-full flex justify-end px-4 sm:px-8 lg:px-25 pt-32 lg:pt-25">
                     <div className="max-w-lg text-[#F0F0D6] text-center lg:text-right">
                         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bodoni font-semibold leading-tight">
                             The Best Gold Ever
                         </h1>
 
 
-                        <p className="mt-2 text-base text-left text-gray-300 max-w-md">
+                        <p className="absolute  mt-2 text-base text-left text-gray-300 max-w-md">
                             People thinking about the future why gold make high value
                             here is the answer for all about
                         </p>
 
-                        <button className="mt-12 px-8 py-3 rounded-lg border border-[#DBF227] text-[#DBF227] hover:bg-[#DBF227] hover:text-black transition">
+                        <button className="mt-35 px-20 py-3  rounded-lg border border-[#DBF227] text-[#DBF227] hover:bg-[#DBF227] hover:text-black transition">
                             Explore
                         </button>
                     </div>
                 </div>
 
             </div>
-
 
 
             <div className="w-full mt-20">
@@ -219,15 +153,16 @@ w-[80%] sm:w-[60%] max-w-[500px]"
                 </div>
 
                 {/* Grid wrapper */}
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 ">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 ">
                         {topDemandedItems.map((item) => (
                             <div
                                 key={item.id}
-                                className="rounded-2xl p-6 bg-gradient-to-b from-[#1b1b1b] to-black border border-[#DBF227]/40"
+                                className=" rounded-2xl p-6 bg-linear-to-b from-[#1b1b1b] to-black border border-[#DBF227]/40 
+                                 hover:shadow-lg hover:scale-110 transition-transform duration-300 cursor-pointer"
                             >
                                 {/* Image */}
-                                <div className="h-40 flex items-center justify-center mb-6">
+                                <div className="h-40 flex items-center justify-center mb-6 ">
                                     <img
                                         src={item.img}
                                         alt={item.name}
@@ -257,21 +192,103 @@ w-[80%] sm:w-[60%] max-w-[500px]"
             <div>
 
             </div>
-            {/* Bottom Banner */}
-            <div className="w-full mt-12 sm:mt-16 lg:mt-20">
+
+            <div className="w-full mt-10 sm:mt-10 lg:mt-2">
                 <div className="max-w-7xl mx-auto px-4">
                     {banners.map((banner) => (
                         <div
                             key={banner.id}
-                            className="w-full overflow-hidden rounded-xl sm:rounded-2xl"
+                            className="w-full rounded-xl sm:rounded-2xl"
                         >
                             <img
                                 src={banner.img}
                                 alt={banner.alt}
-                                className="w-full h-[200px] sm:h-[280px] md:h-[340px] lg:h-[413px] object-cover"
+                                className="w-full aspect-16/7 object-contain"
                             />
                         </div>
                     ))}
+                </div>
+            </div>
+
+
+            <div className=" w-full h-110   ">
+                <h1 className=" sm:text-3xl font-bodoni px-5 font-semibold text-[#F0F0D6]">Recent Searched</h1>
+                <p className="text-sm text-gray-400 mt-2 px-5">
+                    234 New item added
+                </p>
+
+                <div className="max-w-7xl pt-5 mx-auto px-4 sm:px-6 lg:px-10 mt-3">
+                    <div className="flex gap-6 overflow-x-auto pb-4 hide-scrollbar">
+                        {topDemandedItems.map((item) => (
+                            <div
+                                key={item.id}
+                                className="min-w-62.5 shrink-0 rounded-2xl p-6 
+                                           bg-linear-to-b from-[#1b1b1b] to-black 
+                                           border border-[#DBF227]/40"
+                            >
+                                {/* Image */}
+                                <div className="h-40 flex items-center justify-center mb-6">
+                                    <img
+                                        src={item.img}
+                                        alt={item.name}
+                                        className="h-full object-contain"
+                                    />
+                                </div>
+
+                                {/* Text */}
+                                <div className="text-center">
+                                    <h3 className="text-sm text-[#F0F0D6]">{item.name}</h3>
+                                    <p className="text-xs text-gray-400 mt-1">
+                                        SKU: {item.sku}
+                                    </p>
+
+                                    <div className="flex justify-center items-center gap-3 mt-4">
+                                        <span className="text-[#DBF227] font-semibold">
+                                            {item.price}
+                                        </span>
+                                        <span className="text-gray-500 line-through text-sm">
+                                            {item.oldPrice}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+            </div>
+
+            <div className="w-full max-w-7xl mx-auto bg-[#020b10] py-12 sm:py-16 lg:py-20 border border-[#DBF227] rounded-2xl px-4">
+
+                <div className="max-w-2xl mx-auto text-center">
+
+
+                    <h2 className="text-[#DBF227] text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6">
+                        Download Our Mobile App
+                    </h2>
+
+
+                    <p className="text-[#F0F0D6] text-sm sm:text-base mb-8 sm:mb-10 leading-relaxed">
+                        Get the top E-commerce app on your phone! We've got you covered with a
+                        super user-friendly experience and tons of events to check out.
+                        Dive in and explore!
+                    </p>
+
+
+                    <div className="flex flex-row justify-center items-center gap-4 sm:gap-6">
+                        <img
+                            src="/google.png"
+                            alt="Google Play"
+                            className="h-12 sm:h-14 cursor-pointer hover:scale-105 transition"
+                        />
+
+                        <img
+                            src="/apple.png"
+                            alt="App Store"
+                            className="h-12 sm:h-14 cursor-pointer hover:scale-105 transition"
+                        />
+                    </div>
+
                 </div>
             </div>
 

@@ -11,3 +11,12 @@
     font-family: "Solway", serif;
   }
 }
+.hide-scrollbar{
+  scrollbar-width: none;
+}
+.checkout-input {
+  @apply w-full bg-[#1a1a1a] border border-gray-600
+  rounded-md px-3 py-2 text-sm text-white
+  placeholder:text-gray-400 focus:outline-none;
+}
+

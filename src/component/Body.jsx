@@ -24,25 +24,26 @@ const Body = () => {
         </p>
       </div>
 
-      <div className="hidden md:block absolute bottom-0 w-full bg-black/20 backdrop-blur-md">
+      <div className=" md:block absolute bottom-0 w-full bg-black/25 backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-5 grid grid-cols-2 md:grid-cols-4 gap-6 text-white">
           <Feature
-            icon={<Plane size={20} />}
+            icon={<Plane size={20} className="cursor-pointer  hover:scale-120 hover:text-[#DBF227] transition-all duration-300" />}
             title="Free shipping"
             desc="On order over ₹2000"
           />
+
           <Feature
-            icon={<RefreshCcw size={20} />}
+            icon={<RefreshCcw size={20} className="cursor-pointer  hover:scale-120 hover:text-[#DBF227] transition-all duration-300"/>}
             title="Moneyback"
             desc="Guarantee"
           />
           <Feature
-            icon={<Headphones size={20} />}
+            icon={<Headphones size={20} className="cursor-pointer  hover:scale-120 hover:text-[#DBF227] transition-all duration-300" />}
             title="24/7 Support"
             desc="Online help"
           />
           <Feature
-            icon={<ShieldCheck size={20} />}
+            icon={<ShieldCheck size={20} className="cursor-pointer  hover:scale-120 hover:text-[#DBF227] transition-all duration-300" />}
             title="Secure payment"
             desc="Safe checkout"
           />
